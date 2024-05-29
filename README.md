@@ -1,27 +1,31 @@
 # HPC Best Practices
-Defines the workflow for accessing HPC. [Chatbot](https://teams.microsoft.com/l/app/f6405520-7907-4464-8f6e-9889e2fb7d8f?templateInstanceId=e249fd29-3a61-4e73-baae-65341c449294&environment=Default-e229e493-1bf2-40a7-9b84-85f6c23aeed8)
+Defines the workflow for working with HMGU HPC. [Talk with the Chatbot](https://teams.microsoft.com/l/app/f6405520-7907-4464-8f6e-9889e2fb7d8f?templateInstanceId=e249fd29-3a61-4e73-baae-65341c449294&environment=Default-e229e493-1bf2-40a7-9b84-85f6c23aeed8)
 
-## How to get access?
+## Workflow
 
-## How to set things up?
+1. Open terminal (with VPN running, e.g. inside VSCode), and login with 
+```
+ssh <username>@hpc-build01.scidom.de
+```
 
-### Cluster
 
-#### Miniconda
 
-#### Others
 
-### PC
+## Getting Started
 
-#### WSL
+### 1. Get Access
 
-#### VSCode
+In order to get access to HMGU HPC, follow the [steps](https://hmgu.sharepoint.com/sites/hpc-wiki/SitePages/HPC-Onboarding.aspx?xsdata=MDV8MDJ8YWRhbS5pemRlYnNraUBoZWxtaG9sdHotbXVuaWNoLmRlfGI2NTEwY2I2NDcxMDQ2Y2I4NWYxMDhkYzVmYTM4MDEzfGUyMjllNDkzMWJmMjQwYTc5Yjg0ODVmNmMyM2FlZWQ4fDB8MHw2Mzg0OTA0MDMwMjQxNDUyMzh8VW5rbm93bnxUV0ZwYkdac2IzZDhleUpXSWpvaU1DNHdMakF3TURBaUxDSlFJam9pVjJsdU16SWlMQ0pCVGlJNklrMWhhV3dpTENKWFZDSTZNbjA9fDB8fHw%3D&sdata=YjhFWG51ZmY3VHlsWFJzdnBGcEdiUWhDMkxjT3NiZ2RadEpYd3hJOGlNOD0%3D&CT=1716966009623&OR=OWA-NT-Mail&CID=d7428f61-5cd7-52c5-4840-bfc600eafc2c&clickParams=eyJYLUFwcE5hbWUiOiJNaWNyb3NvZnQgT3V0bG9vayBXZWIgQXBwIiwiWC1BcHBWZXJzaW9uIjoiMjAyNDA0MTkwMDcuMjgiLCJPUyI6IldpbmRvd3MgMTEifQ%3D%3D), including filling in the form, getting the neccesary approvals and sending it to [DigIT](digit-hpc@helmholtz-munich.de). 
 
-#### MobaXterm
 
-#### FileZilla
+### 2. Install the neccessary software
 
-#### Putty
+Install all neccessary tools by following the [tool installation guide](https://bioinformatics_core.ascgitlab.helmholtz-muenchen.de/it_hpc_documentation/Installations.html)
+
+### 3. Use VSCode
+
+Establish [VSCode connection](https://bioinformatics_core.ascgitlab.helmholtz-muenchen.de/it_hpc_documentation/Installations.html#VSCode-Cluster-Connection)
+
 
 ## How to use the cluster?
 
