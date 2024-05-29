@@ -21,10 +21,15 @@ Have fun :)
 ## Read about GPU Computing, whether you need to run your script on multiple GPUs and PyTorch optimization
 
 [Intro to SLURM](https://researchcomputing.princeton.edu/support/knowledge-base/slurm)
+
 [PyTorch on Clusters](https://researchcomputing.princeton.edu/support/knowledge-base/pytorch)
+
 [Multi-GPU Training](https://github.com/PrincetonUniversity/multi_gpu_training)
+
 [Performance Tuning Guide to PyTorch](https://pytorch.org/tutorials/recipes/recipes/tuning_guide.html)
+
 [Reproducibility with PyTorch](https://pytorch.org/docs/stable/notes/randomness.html)
+
 [Profiling](https://pytorch.org/tutorials/beginner/profiler.html)
 
 ## How to use the cluster?
