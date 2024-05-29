@@ -26,6 +26,9 @@ Install all neccessary tools by following the [tool installation guide](https://
 
 Establish [VSCode connection](https://bioinformatics_core.ascgitlab.helmholtz-muenchen.de/it_hpc_documentation/Installations.html#VSCode-Cluster-Connection)
 
+### 4. Troubleshooting
+
+WSL 2 is not working -> WSL 1 required
 
 ## How to use the cluster?
 
