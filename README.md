@@ -25,7 +25,7 @@ Have fun :)
 
 [Multi-GPU Training](https://github.com/PrincetonUniversity/multi_gpu_training)
 
-[Performance Tuning Guide to PyTorch](https://pytorch.org/tutorials/recipes/recipes/tuning_guide.html)
+[Performance Tuning Guide to PyTorch](https://pytorch.org/tutorials/recipes/recipes/tuning_guide.html), [Slides](https://tigress-web.princeton.edu/~jdh4/PyTorchPerformanceTuningGuide_GTC2021.pdf)
 
 [Reproducibility with PyTorch](https://pytorch.org/docs/stable/notes/randomness.html)
 
