@@ -1,5 +1,4 @@
-# HMGU HPC Workflow
-Want to submit a job to the cluster?
+# Want to train your model on a cluster?
 
 Quick troubleshooting? [Talk with the Chatbot!](https://teams.microsoft.com/l/app/f6405520-7907-4464-8f6e-9889e2fb7d8f?templateInstanceId=e249fd29-3a61-4e73-baae-65341c449294&environment=Default-e229e493-1bf2-40a7-9b84-85f6c23aeed8)
 
