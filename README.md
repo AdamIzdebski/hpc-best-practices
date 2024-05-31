@@ -39,7 +39,7 @@ and cancel jobs using
 scancel <job_id>
 ```
 
-#### Running A100 GPUs
+#### Running your script on an A100 GPU
 
 E.g. the highest supported CUDA version for NVIDIA TESLA A100 is 11.6, which requires the following packages
 ```
