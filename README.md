@@ -21,16 +21,14 @@ Quick troubleshooting? [Talk with the Chatbot!](https://teams.microsoft.com/l/ap
 
 Have fun :) 
 
-### How to run your script?
+### Running your script
 
 You can run the exemplary script with 
 ```
 sbatch job.slurm
 ```
 
-Running the job will create `output-torch-test.txt` file, which recognizes what is the latest version of the CUDA driver compatible with your GPU and verifies torch installation.
-
-You are welcome :) 
+Running the job will create `output-torch-test.txt` file, which recognizes what is the latest version of the CUDA driver compatible with your GPU and verifies torch installation. You are welcome :) 
 
 To monitor the queue run
 ```
