@@ -21,7 +21,7 @@ Quick troubleshooting? [Talk with the Chatbot!](https://teams.microsoft.com/l/ap
 
 Have fun :) 
 
-## How to run your script?
+### How to run your script?
 
 You can run the exemplary script with 
 ```
