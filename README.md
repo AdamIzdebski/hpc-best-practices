@@ -1,4 +1,4 @@
-# Want to train your model on a cluster?
+# Want to run your model on MHGU HPC cluster?
 
 Quick troubleshooting? [Talk with the Chatbot!](https://teams.microsoft.com/l/app/f6405520-7907-4464-8f6e-9889e2fb7d8f?templateInstanceId=e249fd29-3a61-4e73-baae-65341c449294&environment=Default-e229e493-1bf2-40a7-9b84-85f6c23aeed8)
 
@@ -21,7 +21,37 @@ Quick troubleshooting? [Talk with the Chatbot!](https://teams.microsoft.com/l/ap
 
 Have fun :) 
 
-## Read about GPU Computing, whether you need to run your script on multiple GPUs and PyTorch optimization
+## How to run your script?
+
+You can run the exemplary script with 
+```
+sbatch job.slurm
+```
+
+Running the job will create `output-torch-test.txt` file, which recognizes what is the latest version of the CUDA driver compatible with your GPU and verifies torch installation.
+
+You are welcome :) 
+
+To monitor the queue run
+```
+squeue -u username
+```
+and cancel jobs using
+```
+scancel <job_id>
+```
+
+#### Running A100 GPUs
+
+E.g. the highest supported CUDA version for NVIDIA TESLA A100 is 11.6, which requires the following packages
+```
+pytorch==1.13.1
+torchvision==0.14.1
+torchaudio==0.13.1
+pytorch-cuda=11.6
+```
+
+## Read more about GPU Computing, whether you need to run your script on multiple GPUs and PyTorch optimization
 
 [Intro to SLURM](https://researchcomputing.princeton.edu/support/knowledge-base/slurm)
 
@@ -35,24 +65,7 @@ Have fun :)
 
 [Profiling](https://pytorch.org/tutorials/beginner/profiler.html)
 
-## How to use the cluster?
-
-### GPUs and corresponding PyTorch and CUDA vesrions
-
-#### NVIDIA TESLA A100
-
-The highest supported CUDA version is 11.6 - this requires the following packages to be installed
-```
-pytorch==1.13.1
-torchvision==0.14.1
-torchaudio==0.13.1
-pytorch-cuda=11.6
-```
-
-You can install them using conda with
-```
-conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.6 -c pytorch -c nvidia
-```
+## Other Info
 
 ### File System
 
@@ -63,101 +76,6 @@ conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cud
 /localscratch  # tmp, not optimized for parralel processing, good to store logs, computation specific files etc. 
 /tmp # tmp, not optimized for parralel processing
 ```
-
-### Submiting Jobs
-
-```bash
-#!/bin/bash
-
-#SBATCH -J id
-#SBATCH -o stodut_file
-#SBATCH -e stderr_file
-#SBATCH -p interactive_gpu_p
-#SBATCH --qos interactive_gpu
-#SBATCH --gres=gpu:1 <- how many GPUs you request, use 1
-#SBATCH -t 02:00:00
-#SBATCH -c 6 <- don't use more than 50% (25% for icb-gpusrv0[1-2]) 
-          # of GPU queue node cores unless you request entire node
-#SBATCH --mem=15G <- dont use more than 50% (25% for icb-gpusrv0[1-2]) 
-          # of GPU queue node memory unless you request entire node
-#SBATCH --nice=10000 <- manual priority (should always be set to 10000), 
-          # always include this line
-
-source $HOME/.bashrc
-# do stuff
-conda activate my-env
-python your_script.py
-```
-
-### Submiting Job Arrays
-
-```bash
-#!/bin/bash
-#SBATCH --job-name=my_job_array_script
-#SBATCH --output=array_%A_%a.out
-#SBATCH --error=array_%A_%a.err
-#SBATCH --array=1-10:2  # Run tasks 1, 3, 5, 7, 9
-
-#SBATCH -p interactive_cpu_p
-#SBATCH --qos interactive_cpu
-
-#SBATCH 
-#SBATCH --nodes=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=8G
-#SBATCH --time=1:00:00
-
-#SBATCH --nice=10000
-
-# This script will run 5 tasks in a job array, skipping alternate tasks
-
-# Define an array of input files
-input_files=("input1.txt" "input2.txt" "input3.txt" "input4.txt" "input5.txt" 
-s"input6.txt" "input7.txt" "input8.txt" "input9.txt" "input10.txt")
-
-# Calculate the index of the current task in the array
-task_index=$((SLURM_ARRAY_TASK_ID - 1))
-
-# Check if the current task is within the range of input files
-if [ "$task_index" -lt "${#input_files[@]}" ]; then
-    # Extract the input file for the current task
-    current_input=${input_files[$task_index]}
-
-    # Print task information
-    echo "Running task $SLURM_ARRAY_TASK_ID with input file: $current_input"
-
-    # Replace the following line with the actual command to run your task 
-    # using the current input file
-    # For example: ./my_application $current_input
-
-    echo "Task $SLURM_ARRAY_TASK_ID completed"
-else
-    echo "No task to run for task index $task_index"
-fi
-```
-
-#### Submiting Jobs with VSCode
-
-### Run
-```
-sbatch my_job_script.sh
-```
-or
-```
-sbatch --array=1-10 my_job_array_script.sh
-
-
-Monitor
-squeue -u username
-scontrol show job <job_id>
-
-Cancel
-
-scancel <job_id>
-
-```
-
-
 
 ## How to Get Started?
 
@@ -181,4 +99,8 @@ Install all neccessary tools by following the [tool installation guide](https://
 ### 3. Connect
 
 Establish [VSCode connection](https://bioinformatics_core.ascgitlab.helmholtz-muenchen.de/it_hpc_documentation/Installations.html#VSCode-Cluster-Connection)
+
+## Buy me a coffee
+
+If you found this helpful, buy me a coffee or contribute :)
 
