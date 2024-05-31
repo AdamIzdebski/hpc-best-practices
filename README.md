@@ -10,9 +10,13 @@ Quick troubleshooting? [Talk with the Chatbot!](https://teams.microsoft.com/l/ap
    ```
    This allows me to manage conda and git.
 2. Manage files with FileZilla
+   
    This is an easy way to send files to the cluster. 
+  
 3. Open my project with VSCode
+
    The project is stored on the server and VSCode is connected to the Host (which is the cluster). This is easy code edition. 
+
 4. Run scripts from the terminal (WSL or VSCode)
 
 Have fun :) 
@@ -32,6 +36,23 @@ Have fun :)
 [Profiling](https://pytorch.org/tutorials/beginner/profiler.html)
 
 ## How to use the cluster?
+
+### GPUs and corresponding PyTorch and CUDA vesrions
+
+#### NVIDIA TESLA A100
+
+The highest supported CUDA version is 11.6 - this requires the following packages to be installed
+```
+pytorch==1.13.1
+torchvision==0.14.1
+torchaudio==0.13.1
+pytorch-cuda=11.6
+```
+
+You can install them using conda with
+```
+conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.6 -c pytorch -c nvidia
+```
 
 ### File System
 
