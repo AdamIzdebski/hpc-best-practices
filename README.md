@@ -94,7 +94,7 @@ In order to get access to HMGU HPC, follow the [steps](https://hmgu.sharepoint.c
 Install all neccessary tools by following the [tool installation guide](https://bioinformatics_core.ascgitlab.helmholtz-muenchen.de/it_hpc_documentation/Installations.html)
 
 
-### 3. Connect
+### 4. Connect
 
 Establish [VSCode connection](https://bioinformatics_core.ascgitlab.helmholtz-muenchen.de/it_hpc_documentation/Installations.html#VSCode-Cluster-Connection)
 
