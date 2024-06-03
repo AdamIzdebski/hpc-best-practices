@@ -28,7 +28,7 @@ You can run the exemplary script with
 sbatch job.slurm
 ```
 
-Running the job will create `output-torch-test.txt` file, which recognizes what is the latest version of the CUDA driver compatible with your GPU and verifies torch installation. You are welcome :) 
+Running the job will create `output-torch-test.txt` file, which verifies your torch installation. 
 
 To monitor the queue run
 ```
@@ -37,16 +37,6 @@ squeue -u username
 and cancel jobs using
 ```
 scancel <job_id>
-```
-
-#### Running your script on an A100 GPU
-
-E.g. the highest supported CUDA version for NVIDIA TESLA A100 is 11.6, which requires the following packages
-```
-pytorch==1.13.1
-torchvision==0.14.1
-torchaudio==0.13.1
-pytorch-cuda=11.6
 ```
 
 ## Read more about GPU Computing, whether you need to run your script on multiple GPUs and PyTorch optimization
@@ -97,8 +87,3 @@ Install all neccessary tools by following the [tool installation guide](https://
 ### 4. Connect
 
 Establish [VSCode connection](https://bioinformatics_core.ascgitlab.helmholtz-muenchen.de/it_hpc_documentation/Installations.html#VSCode-Cluster-Connection)
-
-## Buy me a coffee
-
-If you found this helpful, buy me a coffee or contribute :)
-
