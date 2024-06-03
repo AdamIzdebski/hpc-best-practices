@@ -33,8 +33,6 @@ echo -n "Number of available GPUs: "
 nvidia-smi --query-gpu=name --format=csv,noheader | wc -l
 echo -n "GPU name: "
 nvidia-smi --query-gpu=name --format=csv,noheader
-echo -n "The highest compatible CUDA version: "
-nvcc --version | grep release | awk '{print $5}'
 echo "-------------------------------------------------"
 
 echo "Starting the PyTorch compatibility test script..."
