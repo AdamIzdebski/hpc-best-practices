@@ -55,6 +55,8 @@ scancel <job_id>
 
 [Distributed PyTorch](https://pytorch.org/tutorials/intermediate/dist_tuto.html)
 
+[SWA](https://pytorch.org/blog/pytorch-1.6-now-includes-stochastic-weight-averaging/)
+
 ## Other Info
 
 ### File System
