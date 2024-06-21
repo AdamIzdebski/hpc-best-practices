@@ -1,3 +1,24 @@
+# How to structure your repository?
+The code is optimized for prototyping on your local machine and then running all experiements with SLURM. Generally, less lines of code and class nesting, the better.
+
+1. Config files
+   All constants (so all hyperparameters) are stored in separate .yml files. No default values of arguments are allowed in the code. Can include data_dir_suffix, so where to save from data_dir. All standardization goes here. 
+2. download.py --data_dir <PATH_TO_YOUR_DATA_DIR> --dataset <DATASET> --model <MODEL> --path_to_task_config
+   Download, preproccess and store data in the correct format and dtype. Verify the data. Should avoid torch dependency as the requiored torch version changes depending on the CUDA version and thus on the machine.       
+   We want this in a separate step as compute nodes shouldn't be used for this step. 
+3. data.py
+   Generic Dataset. In our case a SMILES dataset with target properties. Use transforms as augmentation. Loads data from a file. Develop on MoleculeNet example, where you need multiple seeds and multiple sample numbers. 
+4. tokenizer.py
+   Generic Tokenizer
+5. dataloader.py
+   Generic dataloader with additional collaters
+6. model.py
+   Model
+7. train.py
+   Trainer. I wouldn't worry about hardcoding a specific logger here too much.
+8. utils/
+   This is actually extremely important. Label utils with care
+
 # Want to run your model on MHGU HPC cluster?
 
 Quick troubleshooting? [Talk with the Chatbot!](https://teams.microsoft.com/l/app/f6405520-7907-4464-8f6e-9889e2fb7d8f?templateInstanceId=e249fd29-3a61-4e73-baae-65341c449294&environment=Default-e229e493-1bf2-40a7-9b84-85f6c23aeed8)
