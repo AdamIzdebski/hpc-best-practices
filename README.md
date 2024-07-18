@@ -91,3 +91,22 @@ Install all neccessary tools by following the [tool installation guide](https://
 ### 4. Connect
 
 Establish [VSCode connection](https://bioinformatics_core.ascgitlab.helmholtz-muenchen.de/it_hpc_documentation/Installations.html#VSCode-Cluster-Connection)
+
+## Setting up the configuration file for DNS queries
+
+Test your internet connection with 
+```
+curl -I https://linuxconfig.org
+```
+If problems occur check the DNS server with `ipconfig /all` and modify 
+
+```
+sudo chattr -i /etc/resolv.conf
+sudo nano /etc/resolv.conf
+```
+Make the file imutable with
+```
+sudo chattr +i /etc/resolv.conf
+```
+ 
+Important - order of the servers do matter!
