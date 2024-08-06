@@ -109,6 +109,7 @@ Make the file imutable with
 
 # Want to write a research project?
 
+- configs.py # defince configs
 - get_data.py  # downloads, pre-processes and tokenizes all data -> what format?
 - datasets.py  # base Dataset that loads from disc and implements get_item
 - loaders.py # is this even needed?
@@ -116,6 +117,10 @@ Make the file imutable with
 - model.py # here is the model, it should implement wrappers to serialize I think and also optimizer. Forward is a forward pass. Get loss should be an optional in the forward Retyrns a general ModelOutput class
 - trainer.py #  Takes BaseModel with forward and ModelOutput and the rest and trains. Needs to save model which ideally would be done by a mixin
 - metrics.py # metrics used to evaluate the model performance
+- experiments
+-- notebooks # here go notebooks
+-- train.py # executes script
+-- eval.py # evaluates
 
 sudo chattr +i /etc/resolv.conf
 ```
