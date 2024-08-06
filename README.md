@@ -115,6 +115,7 @@ Make the file imutable with
 - collators.py # here we pad and mask and prepare inputs. Collators should be model specific, hence JointformerDataCollator will return JointformerModelInput
 - model.py # here is the model, it should implement wrappers to serialize I think and also optimizer. Forward is a forward pass. Get loss should be an optional in the forward Retyrns a general ModelOutput class
 - trainer.py #  Takes BaseModel with forward and ModelOutput and the rest and trains. Needs to save model which ideally would be done by a mixin
+- metrics.py # metrics used to evaluate the model performance
 
 sudo chattr +i /etc/resolv.conf
 ```
