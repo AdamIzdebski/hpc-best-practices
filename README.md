@@ -106,6 +106,12 @@ sudo nano /etc/resolv.conf
 ```
 Make the file imutable with
 ```
+sudo chattr +i /etc/resolv.conf
+```
+ 
+Important - order of the servers do matter!
+
+
 
 # Want to write a research project?
 
@@ -122,7 +128,4 @@ Make the file imutable with
 -- train.py # executes script
 -- eval.py # evaluates
 
-sudo chattr +i /etc/resolv.conf
-```
- 
-Important - order of the servers do matter!
+data processing does not use pytorch
