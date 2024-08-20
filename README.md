@@ -129,3 +129,5 @@ Important - order of the servers do matter!
 -- eval.py # evaluates
 
 data processing does not use pytorch
+
+after another is done: `sbatch --dependency=afterok:$jobid1 job2.slurm`
