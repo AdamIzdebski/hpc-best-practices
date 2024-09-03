@@ -131,3 +131,11 @@ Important - order of the servers do matter!
 data processing does not use pytorch
 
 after another is done: `sbatch --dependency=afterok:$jobid1 job2.slurm`
+
+# Good research
+1. Identify the problem what you want to solve
+2. Identify how other people solve the problem
+3. Table - what is the argument that you solved the problem
+4. Implement the methods, learn the tricks and exact train / eval setup
+5. try your model
+6. It will not work, ask questions and move one row at a time
