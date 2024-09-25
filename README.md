@@ -139,3 +139,5 @@ after another is done: `sbatch --dependency=afterok:$jobid1 job2.slurm`
 4. Implement the methods, learn the tricks and exact train / eval setup
 5. try your model
 6. It will not work, ask questions and move one row at a time
+
+https://github.blog/developer-skills/github-education/beginners-guide-to-github-merging-a-pull-request/ + tool
