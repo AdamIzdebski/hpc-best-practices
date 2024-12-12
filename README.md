@@ -2,6 +2,12 @@
 
 Quick troubleshooting? [Talk with the Chatbot!](https://teams.microsoft.com/l/app/f6405520-7907-4464-8f6e-9889e2fb7d8f?templateInstanceId=e249fd29-3a61-4e73-baae-65341c449294&environment=Default-e229e493-1bf2-40a7-9b84-85f6c23aeed8)
 
+### Absolute and relative paths
+
+### rsync
+
+`rsync -av --progress /home/adamizdebski/projects/ai-integrated-antifibrotic-discovery/ adam.izdebski@hpc-build01.scidom.de:/home/aih/adam.izdebski/project/ai-integrated-antifibrotic-discovery/`
+
 ## Personal Workflow
 
 1. Open a terminal inside WSL 1 with an Ubuntu distribution on my local machine and login to the cluster with
