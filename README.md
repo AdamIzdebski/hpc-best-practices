@@ -1,6 +1,6 @@
-# JUWELS Booster cluster
+# Accessing JUWELS Booster module
 
-This overview contains the minimal list of steps a user needs to execute to run a job using GPUs. 
+This overview contains the minimal list of steps a user needs to execute to run a job utilizing a GPU. 
 
 ## Getting started
 
