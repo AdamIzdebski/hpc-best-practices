@@ -1,51 +1,106 @@
-# Want to run your model on MHGU HPC cluster?
+# JUWELS Booster cluster
 
-Quick troubleshooting? [Talk with the Chatbot!](https://teams.microsoft.com/l/app/f6405520-7907-4464-8f6e-9889e2fb7d8f?templateInstanceId=e249fd29-3a61-4e73-baae-65341c449294&environment=Default-e229e493-1bf2-40a7-9b84-85f6c23aeed8)
+This overview contains the minimal list of steps a user needs to execute to run a job using GPUs. 
 
-### Absolute and relative paths
+## Getting started
 
-### rsync
+#### 1. Apply for computing resources via the [application form](https://application.fz-juelich.de/Antragsserver/haicore/WEB/application/login.php?appkind=haicore).
 
-`rsync -av --progress /home/adamizdebski/projects/ai-integrated-antifibrotic-discovery/ adam.izdebski@hpc-build01.scidom.de:/home/aih/adam.izdebski/project/ai-integrated-antifibrotic-discovery/`
+#### 2. Set up an SSH key and upload it via [JUDOOR](https://judoor.fz-juelich.de/login).
+> **Windows**: you'll need a workaround, described in user documentation's FAQ. 
 
-## Personal Workflow
+**Tip:** Debug via `ssh -vvv`.
 
-1. Open a terminal inside WSL 1 with an Ubuntu distribution on my local machine and login to the cluster with
-   ```
-   ssh <username>@hpc-build01.scidom.de
-   ```
-   This allows me to manage conda and git.
-2. Manage files with FileZilla
-   
-   This is an easy way to send files to the cluster. 
-  
-3. Open my project with VSCode
+#### 3. Link your HOME directory to PROJECT space.  
 
-   The project is stored on the server and VSCode is connected to the Host (which is the cluster). This is easy code edition. 
+Your HOME directory is limited in space. To avoid issues, create a personal directory in your PROJECT space and link it as `~/my-project`:
+  ```bash
+  mkdir -p /p/project1/my-project/"$USER"
+  ln -s /p/project1/my-project/"$USER" ~/my-project
+  ```
+  Use `~/my-project` as your main working directory for code and important files.
 
-4. Run scripts from the terminal (WSL or VSCode)
+For temporary files, use SCRATCH. Move and link cache directories:
+  ```bash
+  mkdir -p /p/scratch/my-project/"$USER"
+  [ -d ~/.cache ] && mv ~/.cache /p/scratch/my-project/"$USER"/.cache
+  mkdir -p /p/scratch/my-project/"$USER"/.cache
+  ln -s /p/scratch/my-project/"$USER"/.cache ~/.cache
+  ```
+  > Example usage: use `/p/scratch/my-project/$USER` for temporary data. Use `~/my-project` to store final model weights. **Note:** Files in SCRATCH are deleted after 90 days of inactivity.
 
-Have fun :) 
+See the [File System](https://sdlaml.pages.jsc.fz-juelich.de/ai/guides/jsc_basics/#file-system) section below for more details on HOME, PROJECT, and SCRATCH.
 
-### Running your script
+#### 4. Set-up environment
 
-You can run the exemplary script with 
+> **Warning:** do not use conda :)
+
+Refer to the [template](https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template)
+
+Can modify files to use `uv`.
+
+#### 5. Set-up a remote connections for your IDE.
+
+## Using the cluster
+
+### Single GPU training
+```bash
+#!/bin/bash -x
+
+#SBATCH --nodes=1            
+#SBATCH --gres=gpu:1
+#SBATCH --ntasks-per-node=1  
+#SBATCH --cpus-per-task=96
+#SBATCH --time=06:00:00
+#SBATCH --partition=dc-gpu
+#SBATCH --account=training2434
+#SBATCH --output=%j.out
+#SBATCH --error=%j.err
+#SBATCH --reservation=training2434_day2
+
+# To get number of cpu per task
+export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
+# activate env
+source $HOME/course/$USER/sc_venv_template/activate.sh
+# run script from above
+time srun python3 gpu_training.py
 ```
-sbatch job.slurm
+
+### Multiple GPU training
+
+```bash
+#!/bin/bash
+#SBATCH --account=training2338           # Account details
+#SBATCH --nodes=1                        # Number of compute nodes required
+#SBATCH --ntasks-per-node=4              # Number of tasks per node
+#SBATCH --cpus-per-task=24               # CPU cores per task (all cpus available = 96 / num_gpus)
+#SBATCH --gres=gpu:4                     # Use the 4 GPUs available
+#SBATCH --output=output.%j               # File for standard output
+#SBATCH --error=error.%j                 # File for standard error
+#SBATCH --time=02:00:00                  # Maximum runtime
+#SBATCH --partition=booster              # Specified machine partition
+
+export CUDA_VISIBLE_DEVICES=0,1,2,3      # Very important to make the GPUs visible
+export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"  # Get number of cpu per task in the script
+
+source sc_venv_template/activate.sh      # Command to activate the environment
+time srun python3 ddp_training.py
 ```
 
-Running the job will create `output-torch-test.txt` file, which verifies your torch installation. 
 
-To monitor the queue run
-```
-squeue -u username
-```
-and cancel jobs using
-```
-scancel <job_id>
-```
+---
+## References
+### JUWELS Resources
+[User guides](https://sdlaml.pages.jsc.fz-juelich.de/ai/guides/getting_started/)
 
-## Read more about GPU Computing, whether you need to run your script on multiple GPUs and PyTorch optimization
+[User documentation](https://apps.fz-juelich.de/jsc/hps/juwels/index.html)
+
+[Pytorch and DDP](https://gitlab.jsc.fz-juelich.de/sdlaml/pytorch-at-jsc)
+
+[Bringing Deep Learning to JSC supercomputers](https://github.com/HelmholtzAI-FZJ/2024-08-course-Bringing-Deep-Learning-Workloads-to-JSC-supercomputers)
+
+
+### Read more about GPUs and PyTorch
 
 [Intro to SLURM](https://researchcomputing.princeton.edu/support/knowledge-base/slurm)
 
@@ -63,42 +118,11 @@ scancel <job_id>
 
 [SWA](https://pytorch.org/blog/pytorch-1.6-now-includes-stochastic-weight-averaging/)
 
-## Other Info
+---
 
-### File System
+## FAQ
 
-```
-/home/<group>/<username>  # Personal, not computationally efficient
-/lustre/groups/<group>  # Can be accessed within the institute
-/lustre/groups/shared  # Can be accessed by everyone
-/localscratch  # tmp, not optimized for parralel processing, good to store logs, computation specific files etc. 
-/tmp # tmp, not optimized for parralel processing
-```
-
-## How to Get Started?
-
-### 1. Get Access
-
-In order to get access to HMGU HPC, follow the [steps](https://hmgu.sharepoint.com/sites/hpc-wiki/SitePages/HPC-Onboarding.aspx?xsdata=MDV8MDJ8YWRhbS5pemRlYnNraUBoZWxtaG9sdHotbXVuaWNoLmRlfGI2NTEwY2I2NDcxMDQ2Y2I4NWYxMDhkYzVmYTM4MDEzfGUyMjllNDkzMWJmMjQwYTc5Yjg0ODVmNmMyM2FlZWQ4fDB8MHw2Mzg0OTA0MDMwMjQxNDUyMzh8VW5rbm93bnxUV0ZwYkdac2IzZDhleUpXSWpvaU1DNHdMakF3TURBaUxDSlFJam9pVjJsdU16SWlMQ0pCVGlJNklrMWhhV3dpTENKWFZDSTZNbjA9fDB8fHw%3D&sdata=YjhFWG51ZmY3VHlsWFJzdnBGcEdiUWhDMkxjT3NiZ2RadEpYd3hJOGlNOD0%3D&CT=1716966009623&OR=OWA-NT-Mail&CID=d7428f61-5cd7-52c5-4840-bfc600eafc2c&clickParams=eyJYLUFwcE5hbWUiOiJNaWNyb3NvZnQgT3V0bG9vayBXZWIgQXBwIiwiWC1BcHBWZXJzaW9uIjoiMjAyNDA0MTkwMDcuMjgiLCJPUyI6IldpbmRvd3MgMTEifQ%3D%3D), including filling in the form, getting the neccesary approvals and sending it to [DigIT](digit-hpc@helmholtz-munich.de). 
-
-
-### 2. Install WSL on your PC
-
-[How to set up a WSL development environment?](https://learn.microsoft.com/en-us/windows/wsl/setup/environment)
-
-*Disclaimer: WSL 2 is not working for me, I need to use WSL 1. You can verify this, by executing `sudo apt update` from WSl terminal.*
-
-
-### 3. Install the neccessary software (PC and cluster)
-
-Install all neccessary tools by following the [tool installation guide](https://bioinformatics_core.ascgitlab.helmholtz-muenchen.de/it_hpc_documentation/Installations.html)
-
-
-### 4. Connect
-
-Establish [VSCode connection](https://bioinformatics_core.ascgitlab.helmholtz-muenchen.de/it_hpc_documentation/Installations.html#VSCode-Cluster-Connection)
-
-## Setting up the configuration file for DNS queries
+### Setting up the configuration file for DNS queries
 
 Test your internet connection with 
 ```
@@ -116,34 +140,3 @@ sudo chattr +i /etc/resolv.conf
 ```
  
 Important - order of the servers do matter!
-
-
-
-# Want to write a research project?
-
-- configs.py # defince configs
-- get_data.py  # downloads, pre-processes and tokenizes all data -> what format?
-- datasets.py  # base Dataset that loads from disc and implements get_item
-- loaders.py # is this even needed?
-- collators.py # here we pad and mask and prepare inputs. Collators should be model specific, hence JointformerDataCollator will return JointformerModelInput
-- model.py # here is the model, it should implement wrappers to serialize I think and also optimizer. Forward is a forward pass. Get loss should be an optional in the forward Retyrns a general ModelOutput class
-- trainer.py #  Takes BaseModel with forward and ModelOutput and the rest and trains. Needs to save model which ideally would be done by a mixin
-- metrics.py # metrics used to evaluate the model performance
-- experiments
--- notebooks # here go notebooks
--- train.py # executes script
--- eval.py # evaluates
-
-data processing does not use pytorch
-
-after another is done: `sbatch --dependency=afterok:$jobid1 job2.slurm`
-
-# Good research
-1. Identify the problem what you want to solve
-2. Identify how other people solve the problem
-3. Table - what is the argument that you solved the problem
-4. Implement the methods, learn the tricks and exact train / eval setup
-5. try your model
-6. It will not work, ask questions and move one row at a time
-
-https://github.blog/developer-skills/github-education/beginners-guide-to-github-merging-a-pull-request/ + tool
