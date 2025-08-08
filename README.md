@@ -32,6 +32,39 @@ For temporary files, use SCRATCH. Move and link cache directories:
 See the [File System](https://sdlaml.pages.jsc.fz-juelich.de/ai/guides/jsc_basics/#file-system) section below for more details on HOME, PROJECT, and SCRATCH.
 
 #### 4. Set-up environment
+Example micromamba for hyformer
+  ```bash
+  # ====== Hyformer: cluster install (hardcoded paths) ======
+# EDIT THIS:
+PROJECT_ID=<YOUR_PROJECT_ID>      # e.g., jx1234
+
+# Hardcode all install locations under the project space
+BIN_DIR=/p/project1/$PROJECT_ID/$USER/bin
+MAMBA_ROOT_PREFIX=/p/project1/$PROJECT_ID/$USER/micromamba_root
+MAMBA_PKGS_DIRS=$MAMBA_ROOT_PREFIX/pkgs
+MAMBA_CACHE_DIR=$MAMBA_ROOT_PREFIX/cache
+
+# Sanity checks (fail early if no permission)
+test -d "/p/project1/$PROJECT_ID" || { echo "No such project: /p/project1/$PROJECT_ID"; exit 1; }
+test -w "/p/project1/$PROJECT_ID" || { echo "No write access to /p/project1/$PROJECT_ID"; exit 1; }
+
+mkdir -p "$BIN_DIR" "$MAMBA_PKGS_DIRS" "$MAMBA_CACHE_DIR"
+
+# 1) micromamba binary (linux-64 on JUWELS)
+curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest -o "$BIN_DIR/micromamba"
+chmod +x "$BIN_DIR/micromamba"
+export PATH="$BIN_DIR:$PATH"
+
+# 2) make micromamba use the hardcoded project dirs
+export MAMBA_ROOT_PREFIX
+export MAMBA_PKGS_DIRS
+export MAMBA_CACHE_DIR
+
+# 3) create & activate the env
+eval "$(micromamba shell hook --shell bash)"
+micromamba create -y -f env.yml
+micromamba activate hyformer
+  ```
 
 > **Warning:** do not use conda :)
 
