@@ -33,8 +33,54 @@ See the [File System](https://sdlaml.pages.jsc.fz-juelich.de/ai/guides/jsc_basic
 
 #### 4. Set-up environment
 
-> **Warning:** do not use conda :)
+> **Warning:** do not use conda's default channel :)
 
+**Micromamba** 
+
+Download and unzip the executable
+```bash
+ROOT=/p/project1/$PROJECT_ID/$USER  # can be either inside or outside $USER
+mkdir -p "$ROOT"
+curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest \
+  | tar -xvj -C "$ROOT" bin/micromamba
+```
+
+Set-up configuration file
+```
+/p/project1/hai_1057/$USER/.condarc <<'EOF'
+channels:
+  - conda-forge
+channel_priority: strict
+auto_activate_base: false
+repodata_fns:
+  - current_repodata.json
+envs_dirs:
+  - /p/project1/hai_1057/$USER/micromamba/envs # default env location
+pkgs_dirs:
+  - /p/scratch/hai_1057/$USER/micromamba/pkgs
+cache_dir: /p/scratch/hai_1057/$USER/micromamba/cache
+EOF
+```
+
+Activate and verify
+```
+export PATH="/p/project1/<YOUR_PROJECT_ID>/$USER/bin:$PATH"
+export CONDARC="/p/project1/<YOUR_PROJECT_ID>/$USER/.condarc"
+eval "$(micromamba shell hook --shell bash)"
+micromamba --version
+```
+
+Finally, create a new environment
+```
+micromamba create -y -p /p/project1/<PROJECT_ID>/$USER/envs/env_name -f environment.yml
+```
+
+Activate the environment from a 
+
+
+
+
+**uv**
 Refer to the [template](https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template)
 
 Can modify files to use `uv`.
